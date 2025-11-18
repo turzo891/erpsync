@@ -1,0 +1,46 @@
+# ERP Sync Configuration
+# This file contains DocType-specific sync rules
+
+sync_rules:
+  # Which DocTypes to sync
+  doctypes:
+    - Customer
+    - Supplier
+    - Item
+    - Sales Order
+    - Purchase Order
+    - Sales Invoice
+    - Purchase Invoice
+    - Quotation
+    - Delivery Note
+
+  # Fields to exclude from sync (system fields)
+  exclude_fields:
+    - modified_by
+    - creation
+    - owner
+    - idx
+    - docstatus
+
+  # Conflict resolution strategy
+  # Options: latest_timestamp, cloud_wins, local_wins, manual
+  conflict_resolution: latest_timestamp
+
+  # Sync direction per DocType (optional)
+  # If not specified, bidirectional sync is used
+  doctype_rules:
+    Item:
+      direction: bidirectional
+      priority: cloud  # In case of conflict
+
+    Customer:
+      direction: bidirectional
+      priority: latest_timestamp
+
+  # Retry settings
+  retry:
+    max_attempts: 3
+    backoff_seconds: 5
+
+  # Batch settings
+  batch_size: 50
