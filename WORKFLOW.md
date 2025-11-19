@@ -35,7 +35,7 @@ python main.py webhook
 **Expected Output**:
 ```
 =============================================================
-🚀 ERP Sync Webhook Server Starting...
+ERP Sync Webhook Server Starting...
 =============================================================
 
 Webhook URLs:
@@ -49,9 +49,9 @@ Webhook Secret: your_webhook_secret
 
 =============================================================
 
-✓ Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
-✓ Connected to Local (http://localhost:8000) as user: Administrator
-🔄 Webhook queue processor started
+[OK] Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
+[OK] Connected to Local (http://localhost:8000) as user: Administrator
+Webhook queue processor started
  * Running on http://0.0.0.0:5000
 ```
 
@@ -226,9 +226,9 @@ python main.py test
 
 **Expected Output**:
 ```
-✓ Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
-✓ Connected to Local (http://localhost:8000) as user: Administrator
-✓ All connections successful
+[OK] Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
+[OK] Connected to Local (http://localhost:8000) as user: Administrator
+[OK] All connections successful
 ```
 
 If this fails, see [Troubleshooting](#troubleshooting-common-issues).
@@ -248,14 +248,14 @@ python main.py sync --doctype Item
 
 **Monitor Progress**:
 ```
-🔄 Starting full sync for 11 DocTypes...
+Starting full sync for 11 DocTypes...
 
 Syncing Customer...
 Syncing Supplier...
 Syncing Item...
 ...
 
-✅ Sync completed!
+SUCCESS: Sync completed!
 Total: 1500, Success: 1485, Failed: 5, Conflicts: 10, Skipped: 0
 ```
 
@@ -290,13 +290,13 @@ python main.py setup-webhook
    - **Webhook Secret**: (paste the secret from your `.env` file)
    - **Request Structure**: `Form URL-Encoded`
    - **Condition**: (leave blank to sync all)
-   - **Enabled**: ✓ Check
-   - **Enable Event Streaming**: ✓ Check (if available)
+   - **Enabled**: [OK] Check
+   - **Enable Event Streaming**: [OK] Check (if available)
 
 6. **Enable Triggers**:
-   - ✓ After Insert
-   - ✓ After Save
-   - ✓ After Delete
+   - [OK] After Insert
+   - [OK] After Save
+   - [OK] After Delete
 
 7. **Save**
 
@@ -340,9 +340,9 @@ Use the ngrok URL in your webhook configuration:
 
 3. **Check webhook server logs**:
    ```
-   📨 Webhook received from cloud: Customer/CUST-00001 (save)
-   ⚙️  Processing: Customer/CUST-00001 (cloud_to_local)
-     ✓ Success: Updated on local from cloud
+   Webhook received from cloud: Customer/CUST-00001 (save)
+     Processing: Customer/CUST-00001 (cloud_to_local)
+     [OK] Success: Updated on local from cloud
    ```
 
 4. **Verify in Local ERP**:
@@ -456,7 +456,7 @@ Recent Sync Operations:
   [14:23:50] FAILED - Sales Order/SO-00456 (cloud_to_local)
   ...
 
-⚠ Unresolved Conflicts: 5
+WARNING: Unresolved Conflicts: 5
 ```
 
 ### View Webhook Queue Status
@@ -661,7 +661,7 @@ For conflicts requiring manual intervention:
 
 **Symptoms**:
 ```
-✗ Failed to connect to Cloud (https://your-erp.com)
+[FAIL] Failed to connect to Cloud (https://your-erp.com)
 ```
 
 **Solutions**:
@@ -830,7 +830,7 @@ curl http://localhost:5000/status
 **Solutions**:
 
 1. **Check queue processor is running**:
-   - Webhook server should show: "🔄 Webhook queue processor started"
+   - Webhook server should show: "Webhook queue processor started"
 
 2. **Identify bottleneck**:
    ```sql

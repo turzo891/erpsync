@@ -305,7 +305,7 @@ def update_doc(self, doctype, docname, doc_data, retry_on_timestamp_mismatch=Tru
 
             if is_timestamp_error(error_message):
                 retry_count += 1
-                print(f"⚠ Timestamp mismatch, retrying ({retry_count}/{max_retries})...")
+                print(f"WARNING: Timestamp mismatch, retrying ({retry_count}/{max_retries})...")
                 continue
             else:
                 raise
@@ -321,7 +321,7 @@ Cloud Doc (modified: 2025-11-18 10:00:00)
     ↓
 Update Request (modified: 2025-11-18 10:00:00)
     ↓
-❌ ERROR: Timestamp mismatch (someone edited at 10:05:00)
+ERROR: ERROR: Timestamp mismatch (someone edited at 10:05:00)
 ```
 
 **Attempt 2**: Fetch latest and retry
@@ -330,7 +330,7 @@ Fetch Latest Doc (modified: 2025-11-18 10:05:00)
     ↓
 Update Request (modified: 2025-11-18 10:05:00)
     ↓
-✅ SUCCESS: Timestamps match!
+SUCCESS: SUCCESS: Timestamps match!
 ```
 
 ### Error Detection
@@ -590,7 +590,7 @@ Step 6: Sync engine processes again
     └─> Fetches from Cloud (hash = ABC123)
     └─> Compares: cloud_hash == local_hash → NO SYNC NEEDED
     └─> Direction: 'none'
-    └─> ✅ Loop prevented!
+    └─> SUCCESS: Loop prevented!
 ```
 
 ---

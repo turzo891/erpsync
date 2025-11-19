@@ -104,7 +104,7 @@ def handle_webhook(source: str):
             db.add(queue_item)
             db.commit()
 
-            print(f"📨 Webhook received from {source}: {doctype}/{docname} ({action})")
+            print(f"WEBHOOK: Webhook received from {source}: {doctype}/{docname} ({action})")
 
             return jsonify({
                 'status': 'success',
@@ -152,7 +152,7 @@ def process_webhook_queue():
     Background worker to process webhook queue
     Runs in a separate thread
     """
-    print("🔄 Webhook queue processor started")
+    print("SYNC: Webhook queue processor started")
 
     while True:
         try:
@@ -179,7 +179,7 @@ def process_webhook_queue():
                             raise ValueError(f"Unknown webhook source: {webhook.source}")
 
                         # Sync the document
-                        print(f"⚙️  Processing: {webhook.doctype}/{webhook.docname} ({direction})")
+                        print(f"PROCESSING:  Processing: {webhook.doctype}/{webhook.docname} ({direction})")
 
                         success, message = sync_engine.sync_document(
                             webhook.doctype,
@@ -195,9 +195,9 @@ def process_webhook_queue():
                         if not success:
                             webhook.error_message = message
                             webhook.retry_count += 1
-                            print(f"  ✗ Failed: {message}")
+                            print(f"  [FAIL] Failed: {message}")
                         else:
-                            print(f"  ✓ Success: {message}")
+                            print(f"  [OK] Success: {message}")
 
                         db.commit()
 
@@ -206,7 +206,7 @@ def process_webhook_queue():
                         webhook.error_message = str(e)
                         webhook.retry_count += 1
                         db.commit()
-                        print(f"  ✗ Error processing webhook: {e}")
+                        print(f"  [FAIL] Error processing webhook: {e}")
 
             finally:
                 db.close()
@@ -241,7 +241,7 @@ def start_webhook_server(cloud_client: FrappeClient, local_client: FrappeClient)
 
     # Print webhook URLs
     print("\n" + "="*60)
-    print("🚀 ERP Sync Webhook Server Starting...")
+    print("STARTING: ERP Sync Webhook Server Starting...")
     print("="*60)
     print(f"\nWebhook URLs:")
     print(f"  Cloud ERP → http://{WEBHOOK_HOST}:{WEBHOOK_PORT}/webhook/cloud")
@@ -274,7 +274,7 @@ if __name__ == '__main__':
     # Test connections
     print("Testing connections...")
     if not cloud.test_connection() or not local.test_connection():
-        print("❌ Connection test failed. Please check your .env configuration.")
+        print("ERROR: Connection test failed. Please check your .env configuration.")
         exit(1)
 
     # Start server

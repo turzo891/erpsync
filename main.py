@@ -40,7 +40,7 @@ def cmd_init(args):
     """Initialize database"""
     print(f"{Fore.YELLOW}Initializing database...{Style.RESET_ALL}")
     init_db()
-    print(f"{Fore.GREEN}✓ Database initialized successfully{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}[OK] Database initialized successfully{Style.RESET_ALL}")
 
 
 def cmd_test(args):
@@ -65,10 +65,10 @@ def cmd_test(args):
     local_ok = local.test_connection()
 
     if cloud_ok and local_ok:
-        print(f"\n{Fore.GREEN}✓ All connections successful{Style.RESET_ALL}")
+        print(f"\n{Fore.GREEN}[OK] All connections successful{Style.RESET_ALL}")
         return 0
     else:
-        print(f"\n{Fore.RED}✗ Connection test failed{Style.RESET_ALL}")
+        print(f"\n{Fore.RED}[FAIL] Connection test failed{Style.RESET_ALL}")
         return 1
 
 
@@ -100,9 +100,9 @@ def cmd_sync(args):
         success, message = engine.sync_document(args.doctype, args.docname, args.direction)
 
         if success:
-            print(f"{Fore.GREEN}✓ {message}{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}[OK] {message}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}✗ {message}{Style.RESET_ALL}")
+            print(f"{Fore.RED}[FAIL] {message}{Style.RESET_ALL}")
 
     elif args.doctype:
         print(f"Syncing all {args.doctype} documents...")
@@ -136,7 +136,7 @@ def cmd_webhook(args):
 
     # Test connections first
     if not cloud.test_connection() or not local.test_connection():
-        print(f"{Fore.RED}✗ Connection test failed. Please check your configuration.{Style.RESET_ALL}")
+        print(f"{Fore.RED}[FAIL] Connection test failed. Please check your configuration.{Style.RESET_ALL}")
         return 1
 
     # Start webhook server
@@ -175,7 +175,7 @@ def cmd_status(args):
         # Unresolved conflicts
         unresolved = db.query(ConflictRecord).filter_by(resolved=False).count()
         if unresolved > 0:
-            print(f"\n{Fore.YELLOW}⚠ Unresolved Conflicts: {unresolved}{Style.RESET_ALL}")
+            print(f"\n{Fore.YELLOW}WARNING: Unresolved Conflicts: {unresolved}{Style.RESET_ALL}")
 
     finally:
         db.close()

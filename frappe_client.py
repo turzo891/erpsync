@@ -134,7 +134,7 @@ class FrappeClient:
 
                 # If retrying, get the latest document first to get current timestamp
                 if retry_count > 0 and retry_on_timestamp_mismatch:
-                    print(f"  ⟳ Retry {retry_count}/{max_retries}: Fetching latest version of {doctype}/{docname}")
+                    print(f"  RETRY: Retry {retry_count}/{max_retries}: Fetching latest version of {doctype}/{docname}")
                     latest_doc = self.get_doc(doctype, docname)
                     if latest_doc:
                         # Preserve the current modified timestamp for the update
@@ -164,7 +164,7 @@ class FrappeClient:
 
                 if is_timestamp_error and retry_on_timestamp_mismatch and retry_count < max_retries - 1:
                     retry_count += 1
-                    print(f"  ⚠ Timestamp mismatch detected for {doctype}/{docname}, retrying...")
+                    print(f"  WARNING: Timestamp mismatch detected for {doctype}/{docname}, retrying...")
                     continue
                 else:
                     print(f"Error updating doc {doctype}/{docname}: {error_message}")
@@ -292,10 +292,10 @@ class FrappeClient:
             response = self.session.get(url)
             response.raise_for_status()
             user = response.json().get('message')
-            print(f"✓ Connected to {self.instance_name} ({self.url}) as user: {user}")
+            print(f"[OK] Connected to {self.instance_name} ({self.url}) as user: {user}")
             return True
         except Exception as e:
-            print(f"✗ Failed to connect to {self.instance_name} ({self.url}): {e}")
+            print(f"[FAIL] Failed to connect to {self.instance_name} ({self.url}): {e}")
             return False
 
 

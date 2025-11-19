@@ -2,6 +2,27 @@
 
 Get up and running in 5 minutes!
 
+## Choose Your Method
+
+### Option A: Docker (Recommended - Easiest!)
+
+```bash
+cd /Users/spoofing/Documents/erpsync
+
+# Configure credentials
+cp .env.example .env
+nano .env  # Add your ERP API credentials
+
+# Run setup script
+./docker-run.sh
+```
+
+**That's it!** See [DOCKER.md](DOCKER.md) for more details.
+
+---
+
+### Option B: Native Python
+
 ## Step 1: Install Dependencies
 
 ```bash
@@ -62,9 +83,9 @@ python main.py test
 
 You should see:
 ```
-✓ Connected to Cloud
-✓ Connected to Local
-✓ All connections successful
+[OK] Connected to Cloud
+[OK] Connected to Local
+[OK] All connections successful
 ```
 
 ## Step 5: Choose Your Sync Method

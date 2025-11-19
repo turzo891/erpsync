@@ -22,7 +22,7 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d'.' -f1,2)
-echo -e "${GREEN}✓ Found Python $PYTHON_VERSION${NC}"
+echo -e "${GREEN}[OK] Found Python $PYTHON_VERSION${NC}"
 
 # Create virtual environment
 echo ""
@@ -31,7 +31,7 @@ if [ -d "venv" ]; then
     echo -e "${YELLOW}Virtual environment already exists, skipping...${NC}"
 else
     python3 -m venv venv
-    echo -e "${GREEN}✓ Virtual environment created${NC}"
+    echo -e "${GREEN}[OK] Virtual environment created${NC}"
 fi
 
 # Activate virtual environment
@@ -44,15 +44,15 @@ echo ""
 echo "Installing dependencies..."
 pip install -q --upgrade pip
 pip install -q -r requirements.txt
-echo -e "${GREEN}✓ Dependencies installed${NC}"
+echo -e "${GREEN}[OK] Dependencies installed${NC}"
 
 # Create .env if it doesn't exist
 echo ""
 if [ ! -f ".env" ]; then
     echo "Creating .env file from template..."
     cp .env.example .env
-    echo -e "${GREEN}✓ .env file created${NC}"
-    echo -e "${YELLOW}⚠ Please edit .env file with your ERP credentials${NC}"
+    echo -e "${GREEN}[OK] .env file created${NC}"
+    echo -e "${YELLOW}[WARNING] Please edit .env file with your ERP credentials${NC}"
 else
     echo -e "${YELLOW}.env file already exists, skipping...${NC}"
 fi
@@ -64,7 +64,7 @@ chmod +x main.py
 echo ""
 echo "Initializing database..."
 python main.py init
-echo -e "${GREEN}✓ Database initialized${NC}"
+echo -e "${GREEN}[OK] Database initialized${NC}"
 
 echo ""
 echo "=========================================="

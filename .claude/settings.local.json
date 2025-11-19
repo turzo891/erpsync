@@ -1,7 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(for file in /Users/spoofing/Documents/erpsync/*.py)",
+      "Bash(do)",
+      "Bash('s/⟳/RETRY:/g; s/⚠/WARNING:/g; s/✓/[OK]/g; s/✗/[FAIL]/g; s/✅/SUCCESS:/g; s/❌/ERROR:/g; s/📨/WEBHOOK:/g; s/🔄/SYNC:/g; s/⚙️/PROCESSING:/g; s/🚀/STARTING:/g' )",
+      "Bash(\"$file\")",
+      "Bash(done)",
+      "Bash(for file in /Users/spoofing/Documents/erpsync/*.sh)",
+      "Bash('s/✓/[OK]/g; s/✗/[FAIL]/g; s/⚠/[WARNING]/g; s/✅/SUCCESS:/g; s/❌/ERROR:/g' )",
+      "Bash(echo:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

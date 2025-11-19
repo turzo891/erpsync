@@ -1,0 +1,35 @@
+# ERP Sync Webhook Processor Service
+# Copy to: /etc/systemd/system/erpsync-processor.service
+
+[Unit]
+Description=ERP Sync Webhook Queue Processor
+Documentation=https://docs.djangoproject.com/
+After=network.target erpsync-gunicorn.service
+Requires=erpsync-gunicorn.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/erpsync
+
+# Environment
+Environment="PATH=/opt/erpsync/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONPATH=/opt/erpsync"
+Environment="DJANGO_SETTINGS_MODULE=erpsync_project.settings"
+
+# Django management command
+ExecStart=/opt/erpsync/venv/bin/python manage.py process_webhooks
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security
+NoNewPrivileges=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

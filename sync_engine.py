@@ -385,7 +385,7 @@ class SyncEngine:
             'skipped': 0
         }
 
-        print(f"\n🔄 Starting full sync for {len(self.doctypes)} DocTypes...\n")
+        print(f"\nSYNC: Starting full sync for {len(self.doctypes)} DocTypes...\n")
 
         for doctype in self.doctypes:
             print(f"Syncing {doctype}...")
@@ -397,7 +397,7 @@ class SyncEngine:
             stats['conflicts'] += doctype_stats['conflicts']
             stats['skipped'] += doctype_stats['skipped']
 
-        print(f"\n✅ Sync completed!")
+        print(f"\nSUCCESS: Sync completed!")
         print(f"Total: {stats['total']}, Success: {stats['success']}, "
               f"Failed: {stats['failed']}, Conflicts: {stats['conflicts']}, "
               f"Skipped: {stats['skipped']}\n")
@@ -442,7 +442,7 @@ class SyncEngine:
                     stats['skipped'] += 1
                 else:
                     stats['failed'] += 1
-                    print(f"  ✗ {docname}: {message}")
+                    print(f"  [FAIL] {docname}: {message}")
 
         except Exception as e:
             print(f"Error syncing {doctype}: {e}")

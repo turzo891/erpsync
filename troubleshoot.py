@@ -29,17 +29,17 @@ def check_env():
         value = os.getenv(var)
         if not value or 'your_' in value or 'change_this' in value:
             missing.append(var)
-            print(f"  ✗ {var}: Not configured")
+            print(f"  [FAIL] {var}: Not configured")
         else:
             # Mask secrets
             if 'SECRET' in var or 'KEY' in var:
                 masked = value[:4] + '****' + value[-4:]
-                print(f"  ✓ {var}: {masked}")
+                print(f"  [OK] {var}: {masked}")
             else:
-                print(f"  ✓ {var}: {value}")
+                print(f"  [OK] {var}: {value}")
 
     if missing:
-        print(f"\n❌ Missing configuration: {', '.join(missing)}")
+        print(f"\nERROR: Missing configuration: {', '.join(missing)}")
         print("   Please edit .env file with your credentials")
         return False
 
@@ -52,13 +52,13 @@ def check_network(url):
         response = requests.get(url, timeout=5)
         return True
     except requests.exceptions.Timeout:
-        print(f"  ✗ Timeout connecting to {url}")
+        print(f"  [FAIL] Timeout connecting to {url}")
         return False
     except requests.exceptions.ConnectionError:
-        print(f"  ✗ Cannot connect to {url}")
+        print(f"  [FAIL] Cannot connect to {url}")
         return False
     except Exception as e:
-        print(f"  ✗ Error: {e}")
+        print(f"  [FAIL] Error: {e}")
         return False
 
 
@@ -83,18 +83,18 @@ def check_frappe_api(url, api_key, api_secret, name):
 
         if response.status_code == 200:
             user = response.json().get('message')
-            print(f"  ✓ API authentication successful")
-            print(f"  ✓ Logged in as: {user}")
+            print(f"  [OK] API authentication successful")
+            print(f"  [OK] Logged in as: {user}")
             return True
         elif response.status_code == 401:
-            print(f"  ✗ Authentication failed - check API credentials")
+            print(f"  [FAIL] Authentication failed - check API credentials")
             return False
         else:
-            print(f"  ✗ Unexpected response: {response.status_code}")
+            print(f"  [FAIL] Unexpected response: {response.status_code}")
             return False
 
     except Exception as e:
-        print(f"  ✗ API test failed: {e}")
+        print(f"  [FAIL] API test failed: {e}")
         return False
 
 
@@ -103,7 +103,7 @@ def check_database():
     print("\nChecking database...")
 
     if not os.path.exists('sync_state.db'):
-        print("  ✗ Database not initialized")
+        print("  [FAIL] Database not initialized")
         print("    Run: python main.py init")
         return False
 
@@ -112,10 +112,10 @@ def check_database():
         db = get_db()
         count = db.query(SyncRecord).count()
         db.close()
-        print(f"  ✓ Database initialized ({count} sync records)")
+        print(f"  [OK] Database initialized ({count} sync records)")
         return True
     except Exception as e:
-        print(f"  ✗ Database error: {e}")
+        print(f"  [FAIL] Database error: {e}")
         return False
 
 
@@ -128,10 +128,10 @@ def check_webhook_server():
     try:
         response = requests.get(f'http://localhost:{webhook_port}/health', timeout=2)
         if response.status_code == 200:
-            print(f"  ✓ Webhook server is running on port {webhook_port}")
+            print(f"  [OK] Webhook server is running on port {webhook_port}")
             return True
     except:
-        print(f"  ✗ Webhook server is not running on port {webhook_port}")
+        print(f"  [FAIL] Webhook server is not running on port {webhook_port}")
         print(f"    Start with: python main.py webhook")
         return False
 
@@ -174,12 +174,12 @@ def main():
 
     print("\n" + "="*60)
     if all_ok:
-        print("✅ All checks passed! Your setup looks good.")
+        print("SUCCESS: All checks passed! Your setup looks good.")
         print("\nYou can now:")
         print("  - Run sync: python main.py sync")
         print("  - Start webhook server: python main.py webhook")
     else:
-        print("❌ Some checks failed. Please fix the issues above.")
+        print("ERROR: Some checks failed. Please fix the issues above.")
         print("\nCommon solutions:")
         print("  - Edit .env file with correct credentials")
         print("  - Check ERPs are running and accessible")

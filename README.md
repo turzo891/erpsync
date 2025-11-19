@@ -13,6 +13,33 @@ A Python-based bidirectional synchronization system for syncing data between two
 - **Audit Logging**: Complete audit trail of all sync operations
 - **CLI Interface**: Easy-to-use command-line tool
 
+## Docker Deployment (Recommended)
+
+**Quick Start with Docker**:
+
+```bash
+# Clone project
+cd /Users/spoofing/Documents/erpsync
+
+# Configure credentials
+cp .env.example .env
+nano .env  # Add your ERP credentials
+
+# Run with Docker
+./docker-run.sh
+```
+
+**See [DOCKER.md](DOCKER.md) for complete Docker deployment guide.**
+
+Benefits of Docker:
+- No Python/dependencies installation needed
+- Isolated environment
+- Easy deployment and updates
+- Auto-restart on failure
+- Production-ready
+
+---
+
 ## Architecture
 
 ```
@@ -33,6 +60,12 @@ A Python-based bidirectional synchronization system for syncing data between two
 ```
 
 ## Prerequisites
+
+### Option 1: Docker (Recommended)
+- Docker and Docker Compose installed
+- See [DOCKER.md](DOCKER.md) for installation instructions
+
+### Option 2: Native Python
 
 - Python 3.8 or higher
 - Access to both ERP instances (Cloud and Local)
@@ -129,9 +162,9 @@ python main.py test
 
 You should see:
 ```
-✓ Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
-✓ Connected to Local (http://localhost:8000) as user: Administrator
-✓ All connections successful
+[OK] Connected to Cloud (https://your-cloud-erp.com) as user: Administrator
+[OK] Connected to Local (http://localhost:8000) as user: Administrator
+[OK] All connections successful
 ```
 
 ## Usage

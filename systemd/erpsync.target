@@ -1,0 +1,10 @@
+# ERP Sync Target - Manage all ERP Sync services together
+# Copy to: /etc/systemd/system/erpsync.target
+
+[Unit]
+Description=ERP Sync Services
+Documentation=https://docs.djangoproject.com/
+Wants=erpsync-gunicorn.service erpsync-processor.service
+
+[Install]
+WantedBy=multi-user.target
